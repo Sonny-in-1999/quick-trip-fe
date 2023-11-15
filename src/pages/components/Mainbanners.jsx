@@ -41,7 +41,7 @@ const BannerTextDiv = styled.div`
     text-align: center;
     align-items: center;
 `
-const BannerText = styled.text`
+const BannerText = styled.span`
     display: flex;
     color: white;
     font-size: 50px;

@@ -1,4 +1,5 @@
 import { styled } from 'styled-components'
+import { useNavigate } from 'react-router-dom';
 import Colors from '../../colors/Colors'
 import Mainbanner from '../components/Mainbanners'
 
@@ -28,10 +29,14 @@ const LoginDiv = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 3% 0 3%;
-    color: ${(props) => props.color}
+    color: ${(props) => props.color};
 `
 
 const Navbar = () => {
+    const navigate = useNavigate()
+    const login = () =>{
+        navigate('/login')
+    }
     return (
         <>
             <NavbarContainer>
@@ -39,7 +44,7 @@ const Navbar = () => {
                 <NavbarLogoContainer>로고</NavbarLogoContainer>
                 <LoginContainer>
                     <LoginDiv color={Colors.mainColor}>Sign up</LoginDiv>
-                    <LoginDiv color={Colors.font_darkgray}>Sign in</LoginDiv>
+                    <LoginDiv color={Colors.font_darkgray} onClick={login}>Sign in</LoginDiv>
                 </LoginContainer>
             </NavbarContainer>
         </>
