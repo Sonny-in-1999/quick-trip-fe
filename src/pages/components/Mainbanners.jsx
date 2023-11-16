@@ -75,7 +75,7 @@ export default function Mainbanner(){
                 <BannerTextDiv>
                     {bannerList[bannerNumber].text.split('<>').map(el =>{
                         return(
-                            <BannerText>
+                            <BannerText key={el}>
                                 {el}
                             </BannerText>
                         )

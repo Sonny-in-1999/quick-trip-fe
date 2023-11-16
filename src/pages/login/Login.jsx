@@ -29,23 +29,23 @@ export const LoginContainer = styled.div`
   justify-content: center;
   box-shadow: 0px 1px 5px rgba(0,0,0,0.3);
 `
-const RadioContainer = styled.div`
+export const RadioContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 60%;
   align-items: baseline;
 `
-const RadioDiv = styled.label`
+export const RadioDiv = styled.label`
   display: flex;
   flex-direction: row;
   width:20%;
   margin-right: 5%;
   align-items: center;
 `
-const RadioSpan = styled.span`
+export const RadioSpan = styled.span`
   color: ${Colors.font_darkgray};
 `
-const LoginTypeRadio = styled.input`
+export const LoginTypeRadio = styled.input`
   margin-right: 5%;
   vertical-align: middle;
   appearance: none;
@@ -67,6 +67,12 @@ export default function Login(){
   const [userType, setUserType] = useState('')
   const [id, setId] = useState('')
   const [pw, setPw] = useState('')
+  const loginInfo = {
+    userType: userType,
+    id: id,
+    pw: pw
+  }
+
   const buttonSetting = {
     width: 62,
     bgcolor: Colors.mainColor,
@@ -79,13 +85,6 @@ export default function Login(){
     padding: 2
   }
 
-  const loginInfo = {
-    userType: userType,
-    id: id,
-    pw: pw
-  }
-
-  console.log(loginInfo)
   return(
     <LoginPage>
       <LoginContainer>

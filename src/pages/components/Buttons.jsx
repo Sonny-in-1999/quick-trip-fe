@@ -22,6 +22,7 @@ const Button = ({setting}) => {
     radius={setting.radius}
     margin={setting.margin}
     padding={setting.padding}
+    onClick={setting.function}
   >{setting.text}</ButtonComponent>
 }
 export default Button
