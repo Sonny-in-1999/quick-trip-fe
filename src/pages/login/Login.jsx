@@ -38,7 +38,7 @@ export const RadioContainer = styled.div`
 export const RadioDiv = styled.label`
   display: flex;
   flex-direction: row;
-  width:20%;
+  width:30%;
   margin-right: 5%;
   align-items: center;
 `
@@ -67,6 +67,12 @@ export default function Login(){
   const [userType, setUserType] = useState('')
   const [id, setId] = useState('')
   const [pw, setPw] = useState('')
+
+  const login = () => {
+    alert('로그인')
+    navigate('/')
+  }
+
   const loginInfo = {
     userType: userType,
     id: id,
@@ -82,7 +88,8 @@ export default function Login(){
     radius: 0,
     text:'로그인',
     margin: '4% 0 4% 0',
-    padding: 2
+    padding: 2,
+    function: login
   }
 
   return(
@@ -95,7 +102,7 @@ export default function Login(){
             <RadioSpan>일반 회원</RadioSpan>
           </RadioDiv>
           <RadioDiv onClick={() => setUserType('client')}>
-          <LoginTypeRadio type='radio' name='type' value='client'></LoginTypeRadio>
+            <LoginTypeRadio type='radio' name='type' value='client'></LoginTypeRadio>
             <RadioSpan>기업 회원</RadioSpan>
           </RadioDiv>
         </RadioContainer>
