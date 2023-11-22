@@ -19,8 +19,10 @@ export default function Signup(){
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [userType, setUserType] = useState('')
-  const [errorCode, setErrorCode] = useState(999)
-  const [validCheckMessage, setValidCheckMessage] = useState('')
+  const [loginPermit, setLoginPermit] = useState(false)
+  const [idValidError, setIdValidError] = useState()
+  const [pwValidError, setPwValidError] = useState()
+  const [pwCheckValidError, setPwCheckValidError] = useState()
   const memberList = MemberData.list
 
   const signupInfo = {
@@ -33,15 +35,14 @@ export default function Signup(){
     email: email
   }
 
-  console.log(memberList)
-
   const idDuplicationCheck = () => {
     if(memberList.filter(el => el.id === id).length > 0){
-      setErrorCode(1)
-      setValidCheckMessage('다른 회원님이 사용하고 있는 아이디입니다.')
+      setIdValidError('다른 회원님이 사용하고 있는 아이디입니다.')
+    } else if(id.length < 1){
+      setIdValidError('아이디를 입력하세요')
     } else{
-      setErrorCode(0)
       alert('사용 가능한 아이디입니다.')
+      setIdValidError()
     }
   }
 
@@ -58,31 +59,31 @@ export default function Signup(){
 
   const validCheck = () => {
     if(!isValidPassword(pw)){
-      setErrorCode(2)
-      setValidCheckMessage('비밀번호는 문자, 숫자, 특수문자를 포함해 8자 이상이어야 합니다.')
-    } else if(pw !== pwCheck){
-      setErrorCode(3)
-      setValidCheckMessage('비밀번호가 다릅니다')
-    }else {
-      setErrorCode(0)
-      setValidCheckMessage('')
+      setPwValidError('비밀번호는 문자, 숫자, 특수문자를 포함해 8자 이상이어야 합니다.')
+    } else {
+      setPwValidError()
+    }
+    if(pw !== pwCheck){
+      setPwCheckValidError('비밀번호가 다릅니다')
+    } else {
+      setPwCheckValidError()
+    }
+    if(!idValidError && !pwValidError && !pwCheckValidError){
+      setLoginPermit(true)
+      return Promise.resolve()
     }
   }
-  const signup = async() => {
+  const signup = () => {
     // axios
     // .post(`url/${userType === 'tourist' ? 'tourist' : 'client'}`, signupInfo)
     // .then(navigate('/login'))
-    try{
-      await validCheck()
-
-      console.log(errorCode)
-      if(errorCode === 0){
-        alert('회원가입')
-        navigate('/login')
-      }
-    } catch(error){
-      console.log(error)
-    }
+      validCheck()
+      setTimeout(() => {
+        if(loginPermit){
+          alert('회원가입')
+          navigate('/login')
+        }
+      }, 2000)
   }
 
   const buttonSetting = {
@@ -136,9 +137,9 @@ export default function Signup(){
           </RadioDiv>
         </RadioContainer>
         <LoginInput role='이름' type='text' func={setName}></LoginInput>
-        <LoginInput role='ID' buttonSetting={innerIdButtonSetting} type='text' func={setId} validCheck={errorCode === 1 ? validCheckMessage : ''}></LoginInput>
-        <LoginInput role='비밀번호' type='password' func={setPw} validCheck={errorCode === 2 ? validCheckMessage : ''}></LoginInput>
-        <LoginInput role='비밀번호 확인' type='password' func={setPwCheck} validCheck={errorCode === 3 ? validCheckMessage : ''}></LoginInput>
+        <LoginInput role='ID' buttonSetting={innerIdButtonSetting} type='text' func={setId} validCheck={idValidError ? idValidError : ''}></LoginInput>
+        <LoginInput role='비밀번호' type='password' func={setPw} validCheck={pwValidError ? pwValidError : ''}></LoginInput>
+        <LoginInput role='비밀번호 확인' type='password' func={setPwCheck} validCheck={pwCheckValidError ? pwCheckValidError : ''}></LoginInput>
         <LoginInput role='닉네임' type='text' func={setNickName}></LoginInput>
         <LoginInput role='전화번호( - 제외)' type='phone' buttonSetting={innerPhoneButtonSetting} func={setPhone}></LoginInput>
         <LoginInput role='E-Mail' type='email' func={setEmail}></LoginInput>
