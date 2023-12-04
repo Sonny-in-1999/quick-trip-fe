@@ -2,6 +2,10 @@ import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom';
 import Colors from '../../colors/Colors'
 import Mainbanner from '../components/Mainbanners'
+import MenuNavigator from '../components/MenuNavigator';
+import Thumbnails from '../components/Thumbnails';
+import MainRecommendData from '../../dummydata/MainRecommendData';
+import MainRecommend from '../components/MainRecommend';
 
 const NavbarContainer = styled.div`
     display: flex;
@@ -31,7 +35,6 @@ const LoginDiv = styled.div`
     margin: 0 3% 0 3%;
     color: ${(props) => props.color};
 `
-
 const Navbar = () => {
     const navigate = useNavigate()
     const login = () =>{
@@ -51,11 +54,17 @@ const Navbar = () => {
     )
 }
 
+
 export default function Main() {
+    const placeData = MainRecommendData.list
     return (
         <>
             <Navbar></Navbar>
             <Mainbanner></Mainbanner>
+            <MenuNavigator></MenuNavigator>
+            <MainRecommend></MainRecommend>
+            {placeData.map(el => <Thumbnails place={el}></Thumbnails>)}
+            
         </>
     )
 }

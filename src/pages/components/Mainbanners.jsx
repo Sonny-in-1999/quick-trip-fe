@@ -3,10 +3,10 @@ import { useState } from 'react'
 import MainBannerData from '../../dummydata/MainBannerData'
 
 const BannerContainer = styled.div`
-    margin: 1%;
+    margin: 2% 0%;
     position: relative;
     display: flex;
-    width: 100%;
+    width: 90%;
     height: 300px;
     justify-content: center;
     align-items: center;
@@ -73,7 +73,7 @@ export default function Mainbanner(){
             <BannerTextContainer >
                 <Arrow src='https://cdn-icons-png.flaticon.com/512/271/271228.png' deg='180' onClick={() => changeBanners(0)}></Arrow>
                 <BannerTextDiv>
-                    {bannerList[bannerNumber].text.split('<>').map(el =>{
+                    {bannerList[bannerNumber].text.split('\n').map(el =>{
                         return(
                             <BannerText key={el}>
                                 {el}
