@@ -62,9 +62,7 @@ export default function Main() {
             <Navbar></Navbar>
             <Mainbanner></Mainbanner>
             <MenuNavigator></MenuNavigator>
-            <MainRecommend></MainRecommend>
-            {placeData.map(el => <Thumbnails place={el}></Thumbnails>)}
-            
+            <MainRecommend></MainRecommend>            
         </>
     )
 }

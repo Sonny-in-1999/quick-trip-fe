@@ -4,7 +4,8 @@ import Colors from '../../colors/Colors'
 const ThumbnailContainer = styled.div`
   width: 20%;
   border-radius: 20px;
-  padding: 0.5%;
+  margin: 1%;
+  padding: 1%;
   box-shadow: 0px 3px 7px rgba(0,0,0,0.5);
   &:hover{
     transform: scale(1.05);
@@ -19,6 +20,7 @@ const ThumbnailDiv =styled.div`
 const TnumbnailImg = styled.img`
   border-radius: 20px;
   width: 100%;
+  height: 300px;
 `
 const ThumbnailTextDiv = styled.div`
   width: 100%;
@@ -54,6 +56,7 @@ const HashtagDiv = styled.div`
 const Hashtag = styled.span`
   font-size: 1.1rem;
   font-weight: 500;
+  margin-right: 1%;
 `
 
 export default function Thumbnails({place}){
