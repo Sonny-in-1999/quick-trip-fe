@@ -10,13 +10,14 @@ const MainRecommendContainer = styled.div`
   width: 90%;
   padding: 1%;
   margin: 3% 0 1% 0;
-  border: 1px solid red;
+  justify-content: center;
+  box-shadow: 0px 3px 10px rgba(0,0,0,0.3);
 `
 const MainRecommendTitleDiv = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   margin: 1% 0;
-  border: 1px solid green;
   align-items: baseline;
   font-family: 'SUIT-Regular';
 `
@@ -31,37 +32,49 @@ const MainRecommendContentDiv = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  width: 100%;
+  justify-content: flex-start;
 `
 const MainRecommendFilterDiv = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   justify-content: space-around;
   align-items: baseline;
   margin-bottom: 1%;
-  border: 1px solid pink;
   font-family: 'SUIT-Regular';
 `
 
-export default function MainRecommend(){
-  const placeData = MainRecommendData.list
-  const originHashtags = [...new Set(placeData.map(el => el.hashtag).reduce((acc, cur) => [...acc, ...cur]))]
-  const contentHashtags = originHashtags.map(el => el)
+export default function MainRecommend({data}){
+  const placeData = data.list
+  const hashtags = [...new Set(placeData.map(el => el.hashtag).reduce((acc, cur) => [...acc, ...cur]))]
+  // const [contents, setContents] = useState(placeData);
 
-  const [contents, setContents] = useState(placeData);
-  console.log(contents)
+  const [selectedHashtags, setSelectedHashtags] = useState([])
+  console.log(selectedHashtags)
+
+  const findMatchedContent = (hashtags) => {
+    for(let selectd of selectedHashtags){
+      if(hashtags.includes(selectd)){
+        continue
+      } else {
+        return false
+      }
+    }
+    return true
+  }
 
   return(
     <MainRecommendContainer>
       <MainRecommendTitleDiv>
-        <MainRecommendTitle>지금이 딱! 유럽여행</MainRecommendTitle>
-        <MainRecommendDesc>누구나 한번쯤 유럽을 가슴에 품고 산다</MainRecommendDesc>
+        <MainRecommendTitle>{data.title}</MainRecommendTitle>
+        <MainRecommendDesc>{data.desc}</MainRecommendDesc>
       </MainRecommendTitleDiv>
       <MainRecommendFilterDiv>
-        {contentHashtags.slice(0,5).map(el => <FilterButton tag={el} placeData={placeData} contents={contents} setContents={setContents}></FilterButton>)}
+        {hashtags.map(el => el).slice(0,5).map(el => <FilterButton tag={el} selectedHashtags={selectedHashtags} setSelectedHashtags={setSelectedHashtags}></FilterButton>)}
       </MainRecommendFilterDiv>
       <MainRecommendContentDiv>
-        {contents.map(el => <Thumbnails place={el}></Thumbnails>)}
+        {placeData.filter(el => findMatchedContent(el.hashtag)).map(el => <Thumbnails place={el}></Thumbnails>)}
       </MainRecommendContentDiv>
     </MainRecommendContainer>
   )

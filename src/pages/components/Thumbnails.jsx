@@ -4,7 +4,7 @@ import Colors from '../../colors/Colors'
 const ThumbnailContainer = styled.div`
   width: 20%;
   border-radius: 20px;
-  margin: 1%;
+  margin: 1.5%;
   padding: 1%;
   box-shadow: 0px 3px 7px rgba(0,0,0,0.5);
   &:hover{

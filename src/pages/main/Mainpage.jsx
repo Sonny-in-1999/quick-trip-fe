@@ -56,13 +56,15 @@ const Navbar = () => {
 
 
 export default function Main() {
-    const placeData = MainRecommendData.list
+    const data = MainRecommendData.contents
+    console.log(data)
     return (
         <>
             <Navbar></Navbar>
             <Mainbanner></Mainbanner>
             <MenuNavigator></MenuNavigator>
-            <MainRecommend></MainRecommend>            
+            {data.map(el => <MainRecommend data={el}></MainRecommend>)}
+                       
         </>
     )
 }

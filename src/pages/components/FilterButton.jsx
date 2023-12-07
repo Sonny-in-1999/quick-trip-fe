@@ -11,17 +11,18 @@ const Filters = styled.div`
   border-radius: 30px;
 `
 
-export default function FilterButton({tag, placeData, contents, setContents}){
+export default function FilterButton({tag, selectedHashtags, setSelectedHashtags}){
     const [selected, setSelected] = useState(false)
 
     const select = () => {
-        if(!selected){
-            setContents(contents.filter(el => el.hashtag.includes(tag)))
-            setSelected(true)
-        } else if(selected){
-            setContents(placeData)
+        if(selected){
             setSelected(false)
+            setSelectedHashtags(selectedHashtags.filter(el => el !== tag))
+        } else {
+            setSelected(true)
+            setSelectedHashtags([...selectedHashtags, tag])
         }
+        setSelected(!selected)
     }
     return(
         <Filters onClick={select} selected={selected}>#{tag}</Filters>
