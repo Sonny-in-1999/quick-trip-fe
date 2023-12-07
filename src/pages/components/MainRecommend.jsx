@@ -45,10 +45,11 @@ const MainRecommendFilterDiv = styled.div`
 
 export default function MainRecommend(){
   const placeData = MainRecommendData.list
-  const hashtags = [...new Set(placeData.map(el => el.hashtag).reduce((acc, cur) => [...acc, ...cur]))]
-  console.log(hashtags)
+  const originHashtags = [...new Set(placeData.map(el => el.hashtag).reduce((acc, cur) => [...acc, ...cur]))]
+  const contentHashtags = originHashtags.map(el => el)
 
-  const [selected, setSelected] = useState(false)
+  const [contents, setContents] = useState(placeData);
+  console.log(contents)
 
   return(
     <MainRecommendContainer>
@@ -57,10 +58,10 @@ export default function MainRecommend(){
         <MainRecommendDesc>누구나 한번쯤 유럽을 가슴에 품고 산다</MainRecommendDesc>
       </MainRecommendTitleDiv>
       <MainRecommendFilterDiv>
-        {hashtags.splice(0, 5).map(el => <FilterButton tag={el}></FilterButton>)}
+        {contentHashtags.slice(0,5).map(el => <FilterButton tag={el} placeData={placeData} contents={contents} setContents={setContents}></FilterButton>)}
       </MainRecommendFilterDiv>
       <MainRecommendContentDiv>
-        {placeData.map(el => <Thumbnails place={el}></Thumbnails>)}
+        {contents.map(el => <Thumbnails place={el}></Thumbnails>)}
       </MainRecommendContentDiv>
     </MainRecommendContainer>
   )
