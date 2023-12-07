@@ -1,6 +1,8 @@
 import { styled } from 'styled-components' 
+import { useState } from 'react';
 import Thumbnails from './Thumbnails'
 import MainRecommendData from '../../dummydata/MainRecommendData';
+import FilterButton from './FilterButton';
 
 const MainRecommendContainer = styled.div`
   display: flex;
@@ -35,20 +37,19 @@ const MainRecommendFilterDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  border: 1px solid pink;
   align-items: baseline;
+  margin-bottom: 1%;
+  border: 1px solid pink;
   font-family: 'SUIT-Regular';
-`
-const Filters = styled.div`
-  padding: 1% 8%;
-  border: 1px solid aquamarine;
-  border-radius: 30px;
 `
 
 export default function MainRecommend(){
   const placeData = MainRecommendData.list
   const hashtags = [...new Set(placeData.map(el => el.hashtag).reduce((acc, cur) => [...acc, ...cur]))]
   console.log(hashtags)
+
+  const [selected, setSelected] = useState(false)
+
   return(
     <MainRecommendContainer>
       <MainRecommendTitleDiv>
@@ -56,11 +57,7 @@ export default function MainRecommend(){
         <MainRecommendDesc>누구나 한번쯤 유럽을 가슴에 품고 산다</MainRecommendDesc>
       </MainRecommendTitleDiv>
       <MainRecommendFilterDiv>
-        <Filters>필터</Filters>
-        <Filters>필터</Filters>
-        <Filters>필터</Filters>
-        <Filters>필터</Filters>
-        <Filters>필터</Filters>
+        {hashtags.splice(0, 5).map(el => <FilterButton tag={el}></FilterButton>)}
       </MainRecommendFilterDiv>
       <MainRecommendContentDiv>
         {placeData.map(el => <Thumbnails place={el}></Thumbnails>)}
