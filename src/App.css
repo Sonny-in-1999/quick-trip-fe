@@ -26,3 +26,7 @@ main{
   font-weight: normal;
   font-style: normal;
 }
+.link, .link:visited{
+  text-decoration: none;
+  color: black;
+}

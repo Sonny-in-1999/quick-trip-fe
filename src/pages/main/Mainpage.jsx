@@ -1,9 +1,9 @@
 import { styled } from 'styled-components'
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Colors from '../../colors/Colors'
 import Mainbanner from '../components/Mainbanners'
 import MenuNavigator from '../components/MenuNavigator';
-import Thumbnails from '../components/Thumbnails';
 import MainRecommendData from '../../dummydata/MainRecommendData';
 import MainRecommend from '../components/MainRecommend';
 
@@ -57,14 +57,12 @@ const Navbar = () => {
 
 export default function Main() {
     const data = MainRecommendData.contents
-    console.log(data)
     return (
         <>
             <Navbar></Navbar>
             <Mainbanner></Mainbanner>
             <MenuNavigator></MenuNavigator>
-            {data.map(el => <MainRecommend data={el}></MainRecommend>)}
-                       
+            {data.map(el => <MainRecommend data={el}></MainRecommend>)}    
         </>
     )
 }

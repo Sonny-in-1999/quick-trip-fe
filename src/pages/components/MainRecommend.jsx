@@ -1,8 +1,9 @@
-import { styled } from 'styled-components' 
+import { styled } from 'styled-components'
 import { useState } from 'react';
 import Thumbnails from './Thumbnails'
 import MainRecommendData from '../../dummydata/MainRecommendData';
 import FilterButton from './FilterButton';
+import Colors from '../../colors/Colors';
 
 const MainRecommendContainer = styled.div`
   display: flex;
@@ -44,18 +45,37 @@ const MainRecommendFilterDiv = styled.div`
   margin-bottom: 1%;
   font-family: 'SUIT-Regular';
 `
-
-export default function MainRecommend({data}){
-  const placeData = data.list
+const ShowmoreDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2% 0 1% 0;
+`
+const ShowmoreButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 5%;
+`
+const ShowmoreText = styled.span`
+  color: ${Colors.font_lightgray};
+  margin: 3%;
+`
+const ShowmoreImg = styled.img`
+  width: 20%;
+  filter: invert(82%) sepia(6%) saturate(12%) hue-rotate(35deg) brightness(94%) contrast(92%);
+`
+export default function MainRecommend({ data }) {
+  const [shownContents, setShownContents] = useState(6)
+  const placeData = data.list.slice(0, shownContents)
   const hashtags = [...new Set(placeData.map(el => el.hashtag).reduce((acc, cur) => [...acc, ...cur]))]
-  // const [contents, setContents] = useState(placeData);
 
   const [selectedHashtags, setSelectedHashtags] = useState([])
-  console.log(selectedHashtags)
 
   const findMatchedContent = (hashtags) => {
-    for(let selectd of selectedHashtags){
-      if(hashtags.includes(selectd)){
+    for (let selectd of selectedHashtags) {
+      if (hashtags.includes(selectd)) {
         continue
       } else {
         return false
@@ -64,18 +84,30 @@ export default function MainRecommend({data}){
     return true
   }
 
-  return(
+  const showMoreContents = () => {
+    setShownContents(shownContents + 3)
+  }
+
+  return (
     <MainRecommendContainer>
       <MainRecommendTitleDiv>
         <MainRecommendTitle>{data.title}</MainRecommendTitle>
         <MainRecommendDesc>{data.desc}</MainRecommendDesc>
       </MainRecommendTitleDiv>
       <MainRecommendFilterDiv>
-        {hashtags.map(el => el).slice(0,5).map(el => <FilterButton tag={el} selectedHashtags={selectedHashtags} setSelectedHashtags={setSelectedHashtags}></FilterButton>)}
+        {hashtags.map(el => el).slice(0, 5).map(el => <FilterButton tag={el} selectedHashtags={selectedHashtags} setSelectedHashtags={setSelectedHashtags}></FilterButton>)}
       </MainRecommendFilterDiv>
       <MainRecommendContentDiv>
         {placeData.filter(el => findMatchedContent(el.hashtag)).map(el => <Thumbnails place={el}></Thumbnails>)}
       </MainRecommendContentDiv>
+      <ShowmoreDiv>
+        {shownContents < data.list.length ? (
+          <ShowmoreButton onClick={showMoreContents}>
+            <ShowmoreText>더보기</ShowmoreText>
+            <ShowmoreImg src='https://www.svgrepo.com/show/511356/arrow-down-338.svg'></ShowmoreImg>
+          </ShowmoreButton>
+        ) : ''}
+      </ShowmoreDiv>
     </MainRecommendContainer>
   )
 }

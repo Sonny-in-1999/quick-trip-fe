@@ -1,8 +1,9 @@
-import { styled } from 'styled-components' 
+import { styled } from 'styled-components'
+import { Link } from 'react-router-dom'
 import Colors from '../../colors/Colors'
 
 const ThumbnailContainer = styled.div`
-  width: 20%;
+  width: 28.3%;
   border-radius: 20px;
   margin: 1.5%;
   padding: 1%;
@@ -12,7 +13,7 @@ const ThumbnailContainer = styled.div`
     transition: 0.5s;
   }
 `
-const ThumbnailDiv =styled.div`
+const ThumbnailDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,32 +49,40 @@ const DescTextDiv = styled.div`
   font-size: 1rem;
   font-weight: 400;
 `
-const HashtagDiv = styled.div`
+const HashtagsDiv = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
 `
 const Hashtag = styled.span`
-  font-size: 1.1rem;
+  font-size: 100%;
   font-weight: 500;
   margin-right: 1%;
 `
 
-export default function Thumbnails({place}){
-  return(
+export default function Thumbnails({ place }) {
+
+  return (
     <ThumbnailContainer>
-      <ThumbnailDiv>
-        <TnumbnailImg src={place.img_url}></TnumbnailImg>
-        <ThumbnailTextDiv>
-          <UpperTextDiv>
-            <MainTextDiv>{place.name}</MainTextDiv>
-            <DescTextDiv>{place.desc.split('\n').map(el => <span>{el}</span>)}</DescTextDiv>
-          </UpperTextDiv>
-            <HashtagDiv>
-              {place.hashtag.map(el => <Hashtag>#{el}</Hashtag>)} 
-            </HashtagDiv>
-        </ThumbnailTextDiv>
-      </ThumbnailDiv>
+      <Link to={`/bundle/${place.id}`} className='link'>
+        <ThumbnailDiv>
+          <TnumbnailImg src={place.img_url[0]}></TnumbnailImg>
+          <ThumbnailTextDiv>
+            <UpperTextDiv>
+              <MainTextDiv>{place.name}</MainTextDiv>
+              <DescTextDiv>{place.desc.split('\n').map(el => <span>{el}</span>)}</DescTextDiv>
+            </UpperTextDiv>
+            <HashtagsDiv>
+              {place.hashtag.map(el => {
+                return (
+                  <Hashtag>#{el}</Hashtag>
+                )
+              })}
+            </HashtagsDiv>
+          </ThumbnailTextDiv>
+        </ThumbnailDiv>
+      </Link>
     </ThumbnailContainer>
+
   )
 }
